@@ -1,0 +1,4 @@
+rootProject.name = 'the_ledger_co'
+include 'main'
+include 'test'
+
