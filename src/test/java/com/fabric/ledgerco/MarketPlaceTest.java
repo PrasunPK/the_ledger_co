@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class MarketPlaceTest {
@@ -75,5 +76,37 @@ public class MarketPlaceTest {
 
         assertThat(balanceAfterFirstQuery, is(expectedBalanceInFirstQuery));
         assertThat(balanceAfterSecondQuery, is(expectedBalanceInSecondQuery));
+    }
+
+    @Test
+    void shouldMakeALumpSumPaymentAgainstALoanAndReturnRemainingAmountWhenBalanceIsQueriedMultipleTimes() throws InvalidPropertyException, LoanNotFoundException {
+        String bank = "IDIDI";
+        String borrower = "Dale";
+
+        marketPlace.createLoan(bank, borrower, 5000, 1, 6);
+        marketPlace.makePayment(bank, borrower, 1000, 5);
+
+
+        Balance balance = marketPlace.balance(bank, borrower, 3);
+        Balance expectedBalance = new Balance(bank, borrower, 1326, 9);
+        assertThat(balance, is(equalTo(expectedBalance)));
+
+        Balance balanceAfterSixEMIs = marketPlace.balance(bank, borrower, 6);
+        Balance expectedBalanceAfterSixEMIs = new Balance(bank, borrower, 3652, 4);
+        assertThat(balanceAfterSixEMIs, is(equalTo(expectedBalanceAfterSixEMIs)));
+    }
+
+    @Test
+    void shouldMakeALumpSumPaymentAgainstALoanAndReturnRemainingAmountWhenBalanceIsQueriedOnce() throws InvalidPropertyException, LoanNotFoundException {
+        String bank = "UBI";
+        String borrower = "Kane";
+
+        marketPlace.createLoan(bank, borrower, 15000, 2, 9);
+        marketPlace.makePayment(bank, borrower, 7000, 12);
+
+
+        Balance balance = marketPlace.balance(bank, borrower, 12);
+        Balance expectedBalance = new Balance(bank, borrower, 15856, 3);
+        assertThat(balance, is(equalTo(expectedBalance)));
     }
 }

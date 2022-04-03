@@ -2,19 +2,24 @@ package com.fabric.ledgerco;
 
 import com.fabric.ledgerco.exception.InvalidPropertyException;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Loan {
-    private final String bankName;
-    private final String borrowerName;
+    private final String bank;
+    private final String borrower;
     private final int principal;
     private final int noOfYears;
     private final int rateOfInterest;
+    private final List<Payment> transactions = new ArrayList<>();
 
     private final static int TWELVE_MONTHS = 12;
     private final static int HUNDRED = 100;
 
     private Loan(String bankName, String borrowerName, int principal, int noOfYears, int rateOfInterest) {
-        this.bankName = bankName;
-        this.borrowerName = borrowerName;
+        this.bank = bankName;
+        this.borrower = borrowerName;
         this.principal = principal;
         this.noOfYears = noOfYears;
         this.rateOfInterest = rateOfInterest;
@@ -41,14 +46,32 @@ public class Loan {
     }
 
     public Balance getRemainingAmount(int monthsPaid) {
-        int amountPaid = getMonthlyEmiAmount() * monthsPaid;
+        int totalLumpSumPaidAmount = calculateTotalLumpSumPayment(monthsPaid);
+        int monthlyEmiAmount = getMonthlyEmiAmount();
+        int amountPaid = (monthlyEmiAmount * monthsPaid) + totalLumpSumPaidAmount;
+        int remainingNoOfMonths = (noOfYears * TWELVE_MONTHS) - (amountPaid / monthlyEmiAmount);
 
-        int remainingNoOfMonths = (noOfYears * TWELVE_MONTHS) - monthsPaid;
+        return new Balance(this.bank, this.borrower, amountPaid, remainingNoOfMonths);
+    }
 
-        return new Balance(this.bankName, this.borrowerName, amountPaid, remainingNoOfMonths);
+    private int calculateTotalLumpSumPayment(int monthsPaid) {
+        List<Payment> filteredTransactions = transactions
+                .stream()
+                .filter(payment -> payment.isSame(this.bank, this.borrower) && payment.isBelow(monthsPaid))
+                .collect(Collectors.toList());
+        int totalPaidAmount = 0;
+        for (Payment payment : filteredTransactions) {
+            totalPaidAmount += payment.getAmount();
+        }
+
+        return totalPaidAmount;
     }
 
     public boolean isSame(String bankName, String borrower) {
-        return this.borrowerName.equals(borrower) && this.bankName.equals(bankName);
+        return this.borrower.equals(borrower) && this.bank.equals(bankName);
+    }
+
+    public void transact(Payment payment) {
+        transactions.add(payment);
     }
 }

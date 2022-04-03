@@ -9,19 +9,19 @@ import java.util.stream.Collectors;
 
 public class MarketPlace {
 
-    private List<Loan> loans = new ArrayList<>();
-    private List<Payment> transactions = new ArrayList<>();
+    private final List<Loan> loans = new ArrayList<>();
 
     public void createLoan(String bankName, String borrowerName, int principal, int noOfYears, int rateOfInterest) throws InvalidPropertyException {
         Loan loan = Loan.createLoan(bankName, borrowerName, principal, noOfYears, rateOfInterest);
         loans.add(loan);
     }
 
-    public void makePayment(Payment payment) {
-        transactions.add(payment);
+    public Balance balance(String bankName, String borrower, int emiNo) throws LoanNotFoundException {
+        Loan queriedLoan = findLoan(bankName, borrower);
+        return queriedLoan.getRemainingAmount(emiNo);
     }
 
-    public Balance balance(String bankName, String borrower, int emiNo) throws LoanNotFoundException {
+    private Loan findLoan(String bankName, String borrower) throws LoanNotFoundException {
         Loan queriedLoan = loans
                 .stream()
                 .filter((loan -> loan.isSame(bankName, borrower)))
@@ -33,7 +33,12 @@ public class MarketPlace {
         if (queriedLoan == null) {
             throw new LoanNotFoundException();
         }
+        return queriedLoan;
+    }
 
-        return queriedLoan.getRemainingAmount(emiNo);
+    public void makePayment(String bank, String borrower, int lumpSumAmount, int emiNo) throws LoanNotFoundException {
+        Loan loan = findLoan(bank, borrower);
+        Payment payment = new Payment(bank, borrower, lumpSumAmount, emiNo);
+        loan.transact(payment);
     }
 }

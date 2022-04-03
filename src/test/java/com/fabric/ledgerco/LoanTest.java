@@ -44,4 +44,28 @@ public class LoanTest {
         Balance expectedBalance = new Balance("MBI", "Robert", 1044, 12);
         assertThat(balance, is(expectedBalance));
     }
+
+    @Test
+    void shouldGetRemainingAmountInCeillingAfterALumpSumAmountPaid() throws InvalidPropertyException {
+        Loan loan = createLoan("MBI", "Robert", 5000, 1, 6);
+        Payment payment = new Payment("MBI", "Robert", 1000, 5);
+        loan.transact(payment);
+
+        Balance balance = loan.getRemainingAmount(3);
+
+        Balance expectedBalance = new Balance("MBI", "Robert", 1326, 9);
+        assertThat(balance, is(expectedBalance));
+    }
+
+    @Test
+    void shouldGetRemainingAmountAfterALumpSumAmountIsPaidInAdvance() throws InvalidPropertyException {
+        Loan loan = createLoan("MBI", "Robert", 5000, 1, 6);
+        Payment payment = new Payment("MBI", "Robert", 1000, 5);
+        loan.transact(payment);
+
+        Balance balance = loan.getRemainingAmount(6);
+
+        Balance expectedBalance = new Balance("MBI", "Robert", 3652, 4);
+        assertThat(balance, is(expectedBalance));
+    }
 }
