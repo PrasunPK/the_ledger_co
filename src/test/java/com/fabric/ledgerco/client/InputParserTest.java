@@ -1,33 +1,65 @@
 package com.fabric.ledgerco.client;
 
-import com.fabric.ledgerco.Loan;
-import com.fabric.ledgerco.Payment;
-import com.fabric.ledgerco.exception.InvalidPropertyException;
 import org.junit.jupiter.api.Test;
 
-import static com.fabric.ledgerco.Loan.createLoan;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class InputParserTest {
     @Test
-    void shouldParseAndReturnALoan() throws InvalidPropertyException {
+    void shouldParseAndReturnALoan() {
         String input = "LOAN IDIDI Dale 10000 5 4";
-        ICommand command = InputParser.parse(input);
-        ICommandResult result = command.execute();
-        Loan loan = (Loan) result;
-        Loan expectedLoan = createLoan("IDIDI", "Dale", 10000, 5, 4);
-        assertThat(loan, is(equalTo(expectedLoan)));
+
+        final List<ICommand>[] commands = new List[]{new ArrayList<>()};
+        assertDoesNotThrow(() -> {
+            commands[0] = InputParser.parse(input);
+        });
+
+        List<ICommand> result = commands[0];
+        assertThat(result.get(0), instanceOf(LoanCommand.class));
     }
 
     @Test
-    void shouldParseAndReturnAPayment() throws InvalidPropertyException {
+    void shouldParseAndReturnAPayment() {
         String input = "PAYMENT IDIDI Dale 1000 5";
-        ICommand command = InputParser.parse(input);
-        ICommandResult result = command.execute();
-        Payment payment = (Payment) result;
-        Payment expectedLoan = new Payment("IDIDI", "Dale", 1000, 5);
-        assertThat(payment, is(equalTo(expectedLoan)));
+        final List<ICommand>[] commands = new List[]{new ArrayList<>()};
+        assertDoesNotThrow(() -> {
+            commands[0] = InputParser.parse(input);
+        });
+
+        List<ICommand> result = commands[0];
+        assertThat(result.get(0), instanceOf(PaymentCommand.class));
+    }
+
+    @Test
+    void shouldParseAndReturnABalance() {
+        String input = "BALANCE IDIDI Harry 12";
+        final List<ICommand>[] commands = new List[]{new ArrayList<>()};
+        assertDoesNotThrow(() -> {
+            commands[0] = InputParser.parse(input);
+        });
+
+        List<ICommand> result = commands[0];
+        assertThat(result.get(0), instanceOf(BalanceCommand.class));
+    }
+
+    @Test
+    void shouldParseAndReturnMultipleCommands() {
+        String input = "LOAN IDIDI Dale 10000 5 4\n" +
+                "PAYMENT IDIDI Dale 1000 5\n" +
+                "BALANCE IDIDI Harry 12";
+        final List<ICommand>[] commands = new List[]{new ArrayList<>()};
+        assertDoesNotThrow(() -> {
+            commands[0] = InputParser.parse(input);
+        });
+
+        List<ICommand> result = commands[0];
+        assertThat(result.get(0), instanceOf(LoanCommand.class));
+        assertThat(result.get(1), instanceOf(PaymentCommand.class));
+        assertThat(result.get(2), instanceOf(BalanceCommand.class));
     }
 }

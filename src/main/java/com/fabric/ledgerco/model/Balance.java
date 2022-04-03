@@ -1,8 +1,10 @@
-package com.fabric.ledgerco;
+package com.fabric.ledgerco.model;
+
+import com.fabric.ledgerco.client.ICommandResult;
 
 import java.util.Objects;
 
-public class Balance {
+public class Balance implements ICommandResult {
     private final String bankName;
     private final String borrower;
     private final int amountPaid;

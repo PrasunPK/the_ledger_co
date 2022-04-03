@@ -1,7 +1,9 @@
-package com.fabric.ledgerco;
+package com.fabric.ledgerco.model;
 
 import com.fabric.ledgerco.exception.InvalidPropertyException;
 import com.fabric.ledgerco.exception.LoanNotFoundException;
+import com.fabric.ledgerco.model.Balance;
+import com.fabric.ledgerco.model.MarketPlace;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

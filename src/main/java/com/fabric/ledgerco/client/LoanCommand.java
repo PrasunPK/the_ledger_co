@@ -1,16 +1,19 @@
 package com.fabric.ledgerco.client;
 
-import com.fabric.ledgerco.Loan;
+import com.fabric.ledgerco.model.Loan;
+import com.fabric.ledgerco.model.MarketPlace;
 import com.fabric.ledgerco.exception.InvalidPropertyException;
 
 public class LoanCommand implements ICommand {
+    private MarketPlace marketPlace;
     private final String arg1;
     private final String arg2;
     private final String arg3;
     private final String arg4;
     private final String arg5;
 
-    public LoanCommand(String arg1, String arg2, String arg3, String arg4, String arg5) {
+    public LoanCommand(MarketPlace marketPlace, String arg1, String arg2, String arg3, String arg4, String arg5) {
+        this.marketPlace = marketPlace;
         this.arg1 = arg1;
         this.arg2 = arg2;
         this.arg3 = arg3;

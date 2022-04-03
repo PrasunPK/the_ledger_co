@@ -1,20 +1,34 @@
 package com.fabric.ledgerco.client;
 
+import com.fabric.ledgerco.exception.CommandNotSuppoertedException;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class InputParser {
 
     private static final String SPACE = " ";
+    private static final String NEW_LINE = "\n";
 
 
-    public static ICommand parse(String input) {
-        String[] args = input.split(SPACE);
+    public static List<ICommand> parse(String input) throws CommandNotSuppoertedException {
+        String[] lines = input.split(NEW_LINE);
+        List<ICommand> commands = new ArrayList<>();
 
-        String command = args[0];
-        String arg1 = args[1];
-        String arg2 = args[2];
-        String arg3 = args[3];
-        String arg4 = args[4];
-        String arg5 = args.length == 6 ? args[5] : null;
+        for (String line : lines) {
+            String[] args = line.split(SPACE);
 
-        return CommandFactory.getCommand(command, arg1, arg2, arg3, arg4, arg5);
+            String command = args[0];
+            String arg1 = args[1];
+            String arg2 = args[2];
+            String arg3 = args[3];
+
+            String arg4 = args.length > 4 ? args[4] : null;
+            String arg5 = args.length == 6 ? args[5] : null;
+
+            commands.add(CommandFactory.getCommand(command, arg1, arg2, arg3, arg4, arg5));
+        }
+
+        return commands;
     }
 }

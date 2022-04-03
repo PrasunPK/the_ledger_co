@@ -1,4 +1,4 @@
-package com.fabric.ledgerco;
+package com.fabric.ledgerco.model;
 
 import com.fabric.ledgerco.client.ICommandResult;
 import com.fabric.ledgerco.exception.InvalidPropertyException;

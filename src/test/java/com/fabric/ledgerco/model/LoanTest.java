@@ -1,9 +1,12 @@
-package com.fabric.ledgerco;
+package com.fabric.ledgerco.model;
 
 import com.fabric.ledgerco.exception.InvalidPropertyException;
+import com.fabric.ledgerco.model.Balance;
+import com.fabric.ledgerco.model.Loan;
+import com.fabric.ledgerco.model.Payment;
 import org.junit.jupiter.api.Test;
 
-import static com.fabric.ledgerco.Loan.createLoan;
+import static com.fabric.ledgerco.model.Loan.createLoan;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
