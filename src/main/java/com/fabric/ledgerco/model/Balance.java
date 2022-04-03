@@ -29,4 +29,9 @@ public class Balance implements ICommandResult {
     public int hashCode() {
         return Objects.hash(bankName, borrower, amountPaid, emisLeft);
     }
+
+    @Override
+    public String toString() {
+        return bankName + " " + borrower + " " + amountPaid + " " + emisLeft;
+    }
 }

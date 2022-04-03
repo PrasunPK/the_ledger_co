@@ -1,12 +1,11 @@
 package com.fabric.ledgerco.client;
 
-import com.fabric.ledgerco.model.MarketPlace;
 import com.fabric.ledgerco.exception.CommandNotSuppoertedException;
+import com.fabric.ledgerco.model.MarketPlace;
 
 public class CommandFactory {
-    private static final MarketPlace marketPlace = new MarketPlace();
 
-    public static ICommand getCommand(String... args) throws CommandNotSuppoertedException {
+    public static ICommand getCommand(MarketPlace marketPlace, String... args) throws CommandNotSuppoertedException {
         if (args[0].equals("LOAN")) {
             return new LoanCommand(marketPlace, args[1], args[2], args[3], args[4], args[5]);
         }

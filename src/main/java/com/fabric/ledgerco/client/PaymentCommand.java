@@ -1,5 +1,6 @@
 package com.fabric.ledgerco.client;
 
+import com.fabric.ledgerco.exception.LoanNotFoundException;
 import com.fabric.ledgerco.model.MarketPlace;
 import com.fabric.ledgerco.model.Payment;
 
@@ -19,7 +20,13 @@ public class PaymentCommand implements ICommand {
     }
 
     @Override
-    public ICommandResult execute() {
-        return new Payment(arg, arg1, Integer.parseInt(arg2), Integer.parseInt(arg3));
+    public ICommandResult execute() throws LoanNotFoundException {
+        marketPlace.makePayment(arg, arg1, Integer.parseInt(arg2), Integer.parseInt(arg3));
+        return new ICommandResult() {
+            @Override
+            public String toString() {
+                return "";
+            }
+        };
     }
 }

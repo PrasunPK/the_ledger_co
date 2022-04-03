@@ -1,11 +1,10 @@
 package com.fabric.ledgerco.client;
 
-import com.fabric.ledgerco.model.Loan;
-import com.fabric.ledgerco.model.MarketPlace;
 import com.fabric.ledgerco.exception.InvalidPropertyException;
+import com.fabric.ledgerco.model.MarketPlace;
 
 public class LoanCommand implements ICommand {
-    private MarketPlace marketPlace;
+    private final MarketPlace marketPlace;
     private final String arg1;
     private final String arg2;
     private final String arg3;
@@ -23,6 +22,12 @@ public class LoanCommand implements ICommand {
 
     @Override
     public ICommandResult execute() throws InvalidPropertyException {
-        return Loan.createLoan(arg1, arg2, Integer.parseInt(arg3), Integer.parseInt(arg4), Integer.parseInt(arg5));
+        marketPlace.createLoan(arg1, arg2, Integer.parseInt(arg3), Integer.parseInt(arg4), Integer.parseInt(arg5));
+        return new ICommandResult() {
+            @Override
+            public String toString() {
+                return "";
+            }
+        };
     }
 }

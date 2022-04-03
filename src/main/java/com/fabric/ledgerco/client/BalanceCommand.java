@@ -20,4 +20,6 @@ public class BalanceCommand implements ICommand {
     public ICommandResult execute() throws LoanNotFoundException {
         return marketPlace.balance(arg, arg1, Integer.parseInt(arg2));
     }
+
+
 }
