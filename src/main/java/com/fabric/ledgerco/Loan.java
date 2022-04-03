@@ -1,12 +1,14 @@
 package com.fabric.ledgerco;
 
+import com.fabric.ledgerco.client.ICommandResult;
 import com.fabric.ledgerco.exception.InvalidPropertyException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Loan {
+public class Loan implements ICommandResult {
     private final String bank;
     private final String borrower;
     private final int principal;
@@ -73,5 +75,18 @@ public class Loan {
 
     public void transact(Payment payment) {
         transactions.add(payment);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Loan loan = (Loan) o;
+        return principal == loan.principal && noOfYears == loan.noOfYears && rateOfInterest == loan.rateOfInterest && bank.equals(loan.bank) && borrower.equals(loan.borrower) && Objects.equals(transactions, loan.transactions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bank, borrower, principal, noOfYears, rateOfInterest, transactions);
     }
 }

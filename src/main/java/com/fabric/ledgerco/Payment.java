@@ -1,6 +1,10 @@
 package com.fabric.ledgerco;
 
-public class Payment {
+import com.fabric.ledgerco.client.ICommandResult;
+
+import java.util.Objects;
+
+public class Payment implements ICommandResult {
     private final String bankName;
     private final String borrower;
     private final int lumpSumAmount;
@@ -23,5 +27,18 @@ public class Payment {
 
     public boolean isBelow(int monthsPaid) {
         return monthsPaid >= this.emiNo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Payment payment = (Payment) o;
+        return lumpSumAmount == payment.lumpSumAmount && emiNo == payment.emiNo && Objects.equals(bankName, payment.bankName) && Objects.equals(borrower, payment.borrower);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bankName, borrower, lumpSumAmount, emiNo);
     }
 }
