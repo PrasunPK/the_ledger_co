@@ -2,7 +2,7 @@ package com.fabric.ledgerco.parser;
 
 import com.fabric.ledgerco.command.CommandFactory;
 import com.fabric.ledgerco.command.ICommand;
-import com.fabric.ledgerco.exception.CommandNotSuppoertedException;
+import com.fabric.ledgerco.exception.CommandNotSupportedException;
 import com.fabric.ledgerco.model.MarketPlace;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class InputParser {
     private static final String SPACE = " ";
     private static final String NEW_LINE = "\n";
 
-    public static List<ICommand> parse(MarketPlace marketPlace, String input) throws CommandNotSuppoertedException {
+    public static List<ICommand> parse(MarketPlace marketPlace, String input) throws CommandNotSupportedException {
         String[] lines = input.split(NEW_LINE);
         List<ICommand> commands = new ArrayList<>();
 

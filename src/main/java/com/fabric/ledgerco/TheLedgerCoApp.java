@@ -3,7 +3,7 @@ package com.fabric.ledgerco;
 import com.fabric.ledgerco.command.ICommand;
 import com.fabric.ledgerco.command.ICommandResult;
 import com.fabric.ledgerco.parser.InputParser;
-import com.fabric.ledgerco.exception.CommandNotSuppoertedException;
+import com.fabric.ledgerco.exception.CommandNotSupportedException;
 import com.fabric.ledgerco.exception.InvalidPropertyException;
 import com.fabric.ledgerco.exception.LoanNotFoundException;
 import com.fabric.ledgerco.model.MarketPlace;
@@ -38,7 +38,7 @@ public class TheLedgerCoApp {
                     System.out.println(result);
                 }
             }
-        } catch (Exception | CommandNotSuppoertedException | InvalidPropertyException | LoanNotFoundException e) {
+        } catch (Exception | CommandNotSupportedException | InvalidPropertyException | LoanNotFoundException e) {
             e.printStackTrace();
         }
     }

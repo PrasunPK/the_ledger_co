@@ -1,11 +1,11 @@
 package com.fabric.ledgerco.command;
 
-import com.fabric.ledgerco.exception.CommandNotSuppoertedException;
+import com.fabric.ledgerco.exception.CommandNotSupportedException;
 import com.fabric.ledgerco.model.MarketPlace;
 
 public class CommandFactory {
 
-    public static ICommand getCommand(MarketPlace marketPlace, String... args) throws CommandNotSuppoertedException {
+    public static ICommand getCommand(MarketPlace marketPlace, String... args) throws CommandNotSupportedException {
         if (args[0].equals("LOAN")) {
             return new LoanCommand(marketPlace, args[1], args[2], args[3], args[4], args[5]);
         }
@@ -15,6 +15,6 @@ public class CommandFactory {
         if (args[0].equals("BALANCE")) {
             return new BalanceCommand(marketPlace, args[1], args[2], args[3]);
         }
-        throw new CommandNotSuppoertedException();
+        throw new CommandNotSupportedException();
     }
 }
