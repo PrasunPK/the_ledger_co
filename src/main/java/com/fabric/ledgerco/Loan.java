@@ -47,4 +47,8 @@ public class Loan {
 
         return new Balance(this.bankName, this.borrowerName, amountPaid, remainingNoOfMonths);
     }
+
+    public boolean isSame(String bankName, String borrower) {
+        return this.borrowerName.equals(borrower) && this.bankName.equals(bankName);
+    }
 }
