@@ -34,4 +34,14 @@ public class LoanTest {
         Balance expectedBalance = new Balance("MBI", "Robert", 1000, 55);
         assertThat(balance, is(expectedBalance));
     }
+
+
+    @Test
+    void shouldGetMonthlyEmiAmountInCeilling() throws InvalidPropertyException {
+        Loan loan = createLoan("MBI", "Robert", 2000, 2, 2);
+        Balance balance = loan.getRemainingAmount(12);
+
+        Balance expectedBalance = new Balance("MBI", "Robert", 1044, 12);
+        assertThat(balance, is(expectedBalance));
+    }
 }

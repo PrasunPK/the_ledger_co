@@ -33,11 +33,11 @@ public class Loan {
     }
 
     public int getMonthlyEmiAmount() {
-        int interest = (principal * noOfYears * rateOfInterest) / HUNDRED;
+        double interest = (double) (principal * noOfYears * rateOfInterest) / HUNDRED;
 
-        int totalAmountPayable = principal + interest;
+        double totalAmountPayable = principal + interest;
 
-        return totalAmountPayable / (noOfYears * TWELVE_MONTHS);
+        return (int) Math.ceil(totalAmountPayable / (noOfYears * TWELVE_MONTHS));
     }
 
     public Balance getRemainingAmount(int monthsPaid) {
