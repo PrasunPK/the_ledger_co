@@ -1,4 +1,4 @@
-package com.fabric.ledgerco.client;
+package com.fabric.ledgerco.command;
 
 public interface ICommandResult {
 }

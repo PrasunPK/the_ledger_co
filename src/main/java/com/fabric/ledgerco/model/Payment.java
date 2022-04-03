@@ -1,6 +1,6 @@
 package com.fabric.ledgerco.model;
 
-import com.fabric.ledgerco.client.ICommandResult;
+import com.fabric.ledgerco.command.ICommandResult;
 
 import java.util.Objects;
 
@@ -34,7 +34,10 @@ public class Payment implements ICommandResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return lumpSumAmount == payment.lumpSumAmount && emiNo == payment.emiNo && Objects.equals(bankName, payment.bankName) && Objects.equals(borrower, payment.borrower);
+        return lumpSumAmount == payment.lumpSumAmount
+                && emiNo == payment.emiNo
+                && Objects.equals(bankName, payment.bankName)
+                && Objects.equals(borrower, payment.borrower);
     }
 
     @Override

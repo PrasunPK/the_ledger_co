@@ -1,4 +1,4 @@
-package com.fabric.ledgerco.client;
+package com.fabric.ledgerco.command;
 
 import com.fabric.ledgerco.exception.CommandNotSuppoertedException;
 import com.fabric.ledgerco.model.MarketPlace;

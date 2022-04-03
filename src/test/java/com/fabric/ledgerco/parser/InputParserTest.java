@@ -1,6 +1,11 @@
-package com.fabric.ledgerco.client;
+package com.fabric.ledgerco.parser;
 
+import com.fabric.ledgerco.command.BalanceCommand;
+import com.fabric.ledgerco.command.ICommand;
+import com.fabric.ledgerco.command.LoanCommand;
+import com.fabric.ledgerco.command.PaymentCommand;
 import com.fabric.ledgerco.model.MarketPlace;
+import com.fabric.ledgerco.parser.InputParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

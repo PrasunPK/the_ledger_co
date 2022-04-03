@@ -1,8 +1,8 @@
 package com.fabric.ledgerco;
 
-import com.fabric.ledgerco.client.ICommand;
-import com.fabric.ledgerco.client.ICommandResult;
-import com.fabric.ledgerco.client.InputParser;
+import com.fabric.ledgerco.command.ICommand;
+import com.fabric.ledgerco.command.ICommandResult;
+import com.fabric.ledgerco.parser.InputParser;
 import com.fabric.ledgerco.exception.CommandNotSuppoertedException;
 import com.fabric.ledgerco.exception.InvalidPropertyException;
 import com.fabric.ledgerco.exception.LoanNotFoundException;

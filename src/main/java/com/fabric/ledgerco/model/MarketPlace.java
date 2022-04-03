@@ -11,7 +11,8 @@ public class MarketPlace {
 
     private final List<Loan> loans = new ArrayList<>();
 
-    public void createLoan(String bankName, String borrowerName, int principal, int noOfYears, int rateOfInterest) throws InvalidPropertyException {
+    public void createLoan(String bankName, String borrowerName, int principal, int noOfYears, int rateOfInterest)
+            throws InvalidPropertyException {
         Loan loan = Loan.createLoan(bankName, borrowerName, principal, noOfYears, rateOfInterest);
         loans.add(loan);
     }

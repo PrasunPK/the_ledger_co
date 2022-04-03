@@ -1,11 +1,10 @@
-package com.fabric.ledgerco.client;
+package com.fabric.ledgerco.command;
 
 import com.fabric.ledgerco.exception.LoanNotFoundException;
 import com.fabric.ledgerco.model.MarketPlace;
-import com.fabric.ledgerco.model.Payment;
 
 public class PaymentCommand implements ICommand {
-    private MarketPlace marketPlace;
+    private final MarketPlace marketPlace;
     private final String arg;
     private final String arg1;
     private final String arg2;

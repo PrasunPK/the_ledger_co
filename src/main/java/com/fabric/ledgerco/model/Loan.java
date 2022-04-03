@@ -1,6 +1,6 @@
 package com.fabric.ledgerco.model;
 
-import com.fabric.ledgerco.client.ICommandResult;
+import com.fabric.ledgerco.command.ICommandResult;
 import com.fabric.ledgerco.exception.InvalidPropertyException;
 
 import java.util.ArrayList;
@@ -27,7 +27,8 @@ public class Loan implements ICommandResult {
         this.rateOfInterest = rateOfInterest;
     }
 
-    public static Loan createLoan(String bankName, String borrowerName, int principal, int noOfYears, int rateOfInterest) throws InvalidPropertyException {
+    public static Loan createLoan(String bankName, String borrowerName, int principal, int noOfYears,
+                                  int rateOfInterest) throws InvalidPropertyException {
         if (principal <= 0) {
             throw new InvalidPropertyException("Principal cannot be zero");
         } else if (noOfYears <= 0) {
@@ -82,7 +83,12 @@ public class Loan implements ICommandResult {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Loan loan = (Loan) o;
-        return principal == loan.principal && noOfYears == loan.noOfYears && rateOfInterest == loan.rateOfInterest && bank.equals(loan.bank) && borrower.equals(loan.borrower) && Objects.equals(transactions, loan.transactions);
+        return principal == loan.principal
+                && noOfYears == loan.noOfYears
+                && rateOfInterest == loan.rateOfInterest
+                && bank.equals(loan.bank)
+                && borrower.equals(loan.borrower)
+                && Objects.equals(transactions, loan.transactions);
     }
 
     @Override
