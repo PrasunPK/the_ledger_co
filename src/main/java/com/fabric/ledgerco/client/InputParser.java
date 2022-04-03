@@ -11,7 +11,6 @@ public class InputParser {
     private static final String SPACE = " ";
     private static final String NEW_LINE = "\n";
 
-
     public static List<ICommand> parse(MarketPlace marketPlace, String input) throws CommandNotSuppoertedException {
         String[] lines = input.split(NEW_LINE);
         List<ICommand> commands = new ArrayList<>();

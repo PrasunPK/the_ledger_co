@@ -7,47 +7,39 @@ import com.fabric.ledgerco.exception.CommandNotSuppoertedException;
 import com.fabric.ledgerco.exception.InvalidPropertyException;
 import com.fabric.ledgerco.exception.LoanNotFoundException;
 import com.fabric.ledgerco.model.MarketPlace;
+import com.fabric.ledgerco.util.FileOperation;
 
 import java.util.List;
 import java.util.Objects;
 
 public class TheLedgerCoApp {
 
-    public static void main(String[] args) throws CommandNotSuppoertedException, InvalidPropertyException, LoanNotFoundException {
-        String input1 = "LOAN IDIDI Dale 10000 5 4\n" +
-                "LOAN MBI Harry 2000 2 2\n" +
-                "BALANCE IDIDI Dale 5\n" +
-                "BALANCE IDIDI Dale 40\n" +
-                "BALANCE MBI Harry 12\n" +
-                "BALANCE MBI Harry 0";
+    private static final String EMPTY_STRING = "";
 
-        String input2 = "LOAN IDIDI Dale 5000 1 6\n" +
-                "LOAN MBI Harry 10000 3 7\n" +
-                "LOAN UON Shelly 15000 2 9\n" +
-                "PAYMENT IDIDI Dale 1000 5\n" +
-                "PAYMENT MBI Harry 5000 10\n" +
-                "PAYMENT UON Shelly 7000 12\n" +
-                "BALANCE IDIDI Dale 3\n" +
-                "BALANCE IDIDI Dale 6\n" +
-                "BALANCE UON Shelly 12\n" +
-                "BALANCE MBI Harry 12";
+    public static void main(String[] args) {
+        String firstInput = FileOperation.readFile("./src/main/resources/sample_input_1.txt");
+        String secondInput = FileOperation.readFile("./src/main/resources/sample_input_2.txt");
 
         System.out.println("\nOUTPUT:");
-        process(input1);
+        process(firstInput);
+
         System.out.println("\nOUTPUT:");
-        process(input2);
+        process(secondInput);
     }
 
-    private static void process(String input1) throws CommandNotSuppoertedException, InvalidPropertyException, LoanNotFoundException {
+    private static void process(String input1) {
         MarketPlace marketPlace = new MarketPlace();
+        try {
+            List<ICommand> commands = InputParser.parse(marketPlace, input1);
 
-        List<ICommand> commands = InputParser.parse(marketPlace, input1);
-
-        for (ICommand command : commands) {
-            ICommandResult result = command.execute();
-            if (!Objects.equals(result.toString(), "")) {
-                System.out.println(result);
+            for (ICommand command : commands) {
+                ICommandResult result = command.execute();
+                if (!Objects.equals(result.toString(), EMPTY_STRING)) {
+                    System.out.println(result);
+                }
             }
+        } catch (Exception | CommandNotSuppoertedException | InvalidPropertyException | LoanNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
